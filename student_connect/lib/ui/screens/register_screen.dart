@@ -4,6 +4,8 @@ import 'package:student_connect/core/constants/text_styles.dart';
 import 'package:student_connect/ui/custom_widgets/custom_blue_button.dart';
 import 'package:student_connect/ui/custom_widgets/custom_header.dart';
 import 'package:student_connect/ui/custom_widgets/form_container.dart';
+import 'package:student_connect/ui/screens/login_screen.dart';
+import 'package:student_connect/ui/screens/profile_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -80,9 +82,21 @@ class RegisterScreen extends StatelessWidget {
               ),
 
               SizedBox(height: 36),
-
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                    text: 'Please note that you must use your official',
+                    style: regularBlackTextStyle.copyWith(fontSize: 13),
+                    children: [
+                      TextSpan(
+                          text: ' student email ',
+                          style: regularBlackTextStyle.copyWith(
+                              fontSize: 13, color: blueThemeColor)),
+                      TextSpan(text: 'while registering.')
+                    ]),
+              ),
               Text(
-                'Please note that you must use your official student email while registering.',
+                '  ',
                 textAlign: TextAlign.center,
                 style: regularBlackTextStyle.copyWith(fontSize: 13),
               ),
@@ -90,8 +104,47 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(height: 8),
 
               /// login button
-              CustomBlueButton('Register'),
+              CustomBlueButton(
+                  text: 'Register',
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
+                    print('Register button pressed');
+                  }),
               SizedBox(height: 20),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Don’t have an account?',
+                      style: regularBlackTextStyle.copyWith(fontSize: 14),
+                      children: [
+                        TextSpan(
+                          text: ' Log In',
+                          style: boldBlueTextStyle.copyWith(fontSize: 14),
+                        ),
+                      ]),
+                ),
+              ),
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: [
+//                  Text(
+//                    'Don’t have an account?',
+//                    style: regularBlackTextStyle.copyWith(fontSize: 14),
+//                  ),
+//                  Text(
+//                    'REGISTER',
+//                    style:,
+//                  ),
+//                ],
+//              ),
             ],
           ),
         ),

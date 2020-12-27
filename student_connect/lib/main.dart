@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_connect/ui/screens/login_screen.dart';
+import 'package:student_connect/ui/screens/profile_screen.dart';
 import 'package:student_connect/ui/screens/register_screen.dart';
 import 'package:student_connect/ui/screens/splash_screen.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Student Connect',
-      home: RegisterScreen(),
+      home: SplashScreen(),
     );
   }
 }

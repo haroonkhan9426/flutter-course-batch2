@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:student_connect/core/constants/text_styles.dart';
+import 'package:student_connect/ui/screens/register_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    Future.delayed(Duration(seconds: 2), () {
+      print('After 2 sec delay');
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RegisterScreen()),
+          (route) => false);
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
