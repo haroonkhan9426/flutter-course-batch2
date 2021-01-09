@@ -7,7 +7,19 @@ import 'package:student_connect/ui/custom_widgets/form_container.dart';
 import 'package:student_connect/ui/screens/login_screen.dart';
 import 'package:student_connect/ui/screens/profile_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String fullName;
+  String fatherName;
+  String phone;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,61 +35,107 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(height: 66),
 
               /// login form
-              FormContainer(
-                child: Column(
-                  children: [
-                    /// Full Name
-                    TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.person),
-                        labelText: 'Full Name',
-                        hintText: 'First Last',
+              Form(
+                key: _formKey,
+                child: FormContainer(
+                  child: Column(
+                    children: [
+                      /// Full Name
+                      TextFormField(
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Full Name field connot be empty";
+                          } else {
+                            null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.person),
+                          labelText: 'Full Name',
+                          hintText: 'First Last',
+                        ),
+                        onChanged: (val) {
+                          fullName = val;
+                        },
                       ),
-                    ),
 
-                    /// Father's Name
-                    TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.person),
-                        labelText: "Father's Name",
-                        hintText: 'First Last',
+                      /// Father's Name
+                      TextFormField(
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Father Name field connot be empty";
+                          } else {
+                            null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.person),
+                          labelText: "Father's Name",
+                          hintText: 'First Last',
+                        ),
+                        onChanged: (val) {
+                          fatherName = val;
+                        },
                       ),
-                    ),
 
-                    /// phone
-                    TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.phone),
-                        labelText: "Phone",
-                        hintText: '+923243434****',
+                      /// phone
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.phone),
+                          labelText: "Phone",
+                          hintText: '+923243434****',
+                        ),
+                        keyboardType: TextInputType.phone,
+                        onChanged: (val) {
+                          phone = val;
+                        },
                       ),
-                      keyboardType: TextInputType.phone,
-                    ),
 
-                    /// Email TextField
-                    TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.person),
-                        labelText: 'Email',
-                        hintText: 'username@domain.com',
+                      /// Email TextField
+                      TextFormField(
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Email field connot be empty";
+                          } else {
+                            null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.person),
+                          labelText: 'Email',
+                          hintText: 'username@domain.com',
+                        ),
+                        onChanged: (val) {
+                          email = val;
+                        },
                       ),
-                    ),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.lock_open),
-                        labelText: 'Password',
-                        hintText: 'username@domain.com',
+                      TextFormField(
+                        validator: (val) {
+                          if (val.length < 6) {
+                            return "Password should be at least 6 characters";
+                          } else {
+                            null;
+                          }
+                        },
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.lock_open),
+                          labelText: 'Password',
+                          hintText: 'username@domain.com',
+                        ),
+                        onChanged: (val) {
+                          password = val;
+                        },
                       ),
-                    ),
 
-                    /// Password textField
-                  ],
+                      /// Password textField
+                    ],
+                  ),
                 ),
               ),
 
@@ -107,10 +165,18 @@ class RegisterScreen extends StatelessWidget {
               CustomBlueButton(
                   text: 'Register',
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfileScreen()));
+                    if (_formKey.currentState.validate()) {
+                      print('FullName: $fullName');
+                      print('FatherName: $fatherName');
+                      print('Phone: $phone');
+                      print('Email: $email');
+                      print('Password: $password');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileScreen()));
+                    }
+
                     print('Register button pressed');
                   }),
               SizedBox(height: 20),
