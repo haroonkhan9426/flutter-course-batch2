@@ -1,10 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:student_connect/ui/screens/login_screen.dart';
-import 'package:student_connect/ui/screens/profile_screen.dart';
-import 'package:student_connect/ui/screens/register_screen.dart';
+import 'package:student_connect/ui/musuem_screens/screens/splash_screen.dart';
 import 'package:student_connect/ui/screens/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Student Connect',
-      home: SplashScreen(),
+      home: MuseumSplash(),
     );
   }
 }
