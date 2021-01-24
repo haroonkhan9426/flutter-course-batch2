@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_connect/core/constants/colors.dart';
 import 'package:student_connect/core/constants/text_styles.dart';
+import 'package:student_connect/core/services/auth_services.dart';
 import 'package:student_connect/ui/custom_widgets/custom_blue_button.dart';
 import 'package:student_connect/ui/custom_widgets/custom_header.dart';
 import 'package:student_connect/ui/custom_widgets/form_container.dart';
@@ -8,6 +10,10 @@ import 'package:student_connect/ui/screens/profile_screen.dart';
 import 'package:student_connect/ui/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  String email;
+  String password;
+  final AuthService authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +40,9 @@ class LoginScreen extends StatelessWidget {
                         labelText: 'Email',
                         hintText: 'username@domain.com',
                       ),
+                      onChanged: (val) {
+                        email = val;
+                      },
                     ),
                     TextField(
                       obscureText: true,
@@ -43,6 +52,9 @@ class LoginScreen extends StatelessWidget {
                         labelText: 'Password',
                         hintText: 'username@domain.com',
                       ),
+                      onChanged: (val) {
+                        password = val;
+                      },
                     ),
 
                     /// Password textField
@@ -55,9 +67,18 @@ class LoginScreen extends StatelessWidget {
               /// login button
               CustomBlueButton(
                 text: 'Log In',
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfileScreen()));
+                onPressed: () async {
+                  final authResponse = await authService.login(email, password);
+                  if (authResponse.success) {
+                    // Successful Login
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
+                  } else {
+                    print('Login failed');
+                    // login failed
+                  }
                   print('Login Button Pressed');
                 },
               ),
